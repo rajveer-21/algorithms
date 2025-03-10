@@ -1,12 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int size = 0;
 struct node
 {
     int val;
     struct node* next;
 };
 void insert();
+void delete();
 void view();
 struct node* head;
 struct node* temp;
@@ -24,7 +26,12 @@ void main()
         if(choice == 2)
         view();
         if(choice == 3)
-        flg = 100000;
+        delete();
+        if(choice == 4)
+        {
+            flg = 100000;
+            printf("thanks for using this piece of shit!");
+        }
     }
 }
 
@@ -49,12 +56,55 @@ void insert()
         }
         temp->next = temp1;
     }
+    size++;
+}
+
+void delete()
+{
+    int pos = 0;
+    printf("enter the postion you want to delele at-");
+    scanf("%d",&pos);
+    if(size == 0)
+    {
+        printf("the list has no nodes at all!");
+        return;
+    }
+    if(pos >= size)
+    {
+        printf("the position is greater than the size of the list!");
+        return;
+    }
+    else
+    {
+        if(pos == 0)
+        {
+            temp = head;
+            head = head->next;
+            free(temp);
+        }
+        else
+        {
+            int curr = 0;
+            pos = pos - 1;
+            temp = head;
+            struct node* temp1 = temp->next;
+            while(curr != pos)
+            {
+                temp = temp->next;
+                temp1 = temp1->next;
+                curr++;
+            }
+            temp->next = temp1->next;
+            free(temp1);
+        }
+        size--;
+    }
 }
 
 void view()
 {
     temp = head;
-    printf("view the fucking nodes!-\n")
+    printf("view the fucking nodes!-\n");
     while(temp != NULL)
     {
         printf("%d \n",temp->val);
