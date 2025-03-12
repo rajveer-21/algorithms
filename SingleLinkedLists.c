@@ -10,6 +10,7 @@ struct node
 void insert();
 void delete();
 void view();
+void insertAtPosition();
 struct node* head;
 struct node* temp;
 
@@ -28,6 +29,8 @@ void main()
         if(choice == 3)
         delete();
         if(choice == 4)
+        insertAtPosition();
+        if(choice == 5)
         {
             flg = 100000;
             printf("thanks for using this piece of shit!");
@@ -109,5 +112,53 @@ void view()
     {
         printf("%d \n",temp->val);
         temp = temp->next;
+    }
+}
+
+void insertAtPosition()
+{
+    if(head == NULL)
+    {
+        printf("the list doesn't have any nodes!");
+    }
+    else
+    {
+        int val = 0;
+        int pos = 0;
+        printf("enter the position -");
+        scanf("%d", &pos);
+        printf("enter the value -");
+        scanf("%d", &val);
+        if(pos > size)
+        {
+            printf("the postion is greater than the size of the list.");
+        }
+        else
+        {
+            if(pos == 0)
+            {
+               struct node* temp = (struct node*)malloc(sizeof(struct node));
+               temp->val = val;
+               temp->next = head;
+               head = temp;
+            }
+            else
+            {
+                temp = head;
+                struct node* temp1 = temp->next;
+                struct node* nodeInsert = (struct node*)malloc(sizeof(struct node));
+                nodeInsert->val = val;
+                int c = 0;
+                while(c < pos)
+                {
+                    temp = temp->next;
+                    temp1 = temp1->next;
+                    c++;
+                }
+                temp->next = nodeInsert;
+                nodeInsert->next = temp1;
+            }
+            
+        }
     }
 }
